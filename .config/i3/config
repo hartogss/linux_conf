@@ -1,5 +1,5 @@
 exec --no-startup-id nitrogen --restore
-bindsym $mod+Shift+q exec i3lock
+bindsym $mod+Ctrl+q exec i3lock
 
 bindsym $mod+f exec firefox
 
