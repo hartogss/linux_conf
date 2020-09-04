@@ -5,6 +5,13 @@ exec --no-startup-id xrandr --output eDP-1 --brightness 0.7
 # Start NetworkManager on startup to have applet in bar for easy WiFi
 exec --no-startup-id nm-applet
 
+# Volume controls: https://medium.com/hacker-toolbelt/i3wm-on-debian-10-buster-c302420853b1
+# Allows for big or small changes
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym Mod1+Shift+XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -1%
+bindsym Mod1+Shift+XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +1%
+bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 
 # Binding for lock screen, possibly with color
 bindsym $mod+Ctrl+q exec i3lock -c 000000 #-i 'path' to use image background
