@@ -20,6 +20,8 @@ order += "load"
 order += "memory"
 order += "tztime local"
 order += "volume master"
+order += "read_file brightness"
+
 
 
 wireless _first_ {
@@ -51,11 +53,17 @@ memory {
 }
 
 tztime local {
-        format = "%d-%m %H.%M"
+        format = "%d-%m %H:%M"
 }
 
-#https://medium.com/hacker-toolbelt/my-i3status-customization-3e8ad6f0153a
+# https://medium.com/hacker-toolbelt/my-i3status-customization-3e8ad6f0153a
 volume master {
         format = "♪:%volume"
         format_muted = "♪:muted(%volume)"
 }
+read_file brightness {
+        format = "🔆:%content"
+        path = /sys/class/backlight/gmux_backlight/brightness"
+        max_characters = 0
+}
+set $refresh_i3status killall -SIGUSR1 i3status
