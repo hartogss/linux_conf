@@ -1,20 +1,29 @@
 # Restore wallpaper on startup
 exec --no-startup-id nitrogen --restore
 # Lower brightness on startup
-exec --no-startup-id xrandr --output eDP-1 --brightness 0.7
+exec --no-startup-id xrandr --output eDP-1 --brightness 0.8
 # Start NetworkManager on startup to have applet in bar for easy WiFi
 exec --no-startup-id nm-applet
 
 # Volume controls: https://medium.com/hacker-toolbelt/i3wm-on-debian-10-buster-c302420853b1
-# Allows for big or small changes
-bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
-bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
-bindsym Mod1+Shift+XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -1%
-bindsym Mod1+Shift+XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +1%
+# Depends on xbindkeys
+# Allows for big or small changes, change in volume will unmute
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%, exec pactl set-sink-mute @DEFAULT_SINK@ 0
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%, exec pactl set-sink-mute @DEFAULT_SINK@ 0
+bindsym Mod1+Shift+XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -1%, exec pactl set-sink-mute @DEFAULT_SINK@ 0
+bindsym Mod1+Shift+XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +1%, exec pactl set-sink-mute @DEFAULT_SINK@ 0
 bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 
+# Brightness controls: https://unix.stackexchange.com/questions/526653/control-screen-brightness-in-i3
+# Uses brightnessctl, xbacklight couldn't get to work
+# Require chmod o+w executed on /sys/class/backlight/gmux_backlight/brightness (file)
+bindsym XF86MonBrightnessDown exec brightnessctl s 5%-
+bindsym XF86MonBrightnessUp exec brightnessctl s 5%+
+
+
+
 # Binding for lock screen, possibly with color
-bindsym $mod+Ctrl+q exec i3lock -c 000000 #-i 'path' to use image background
+bindsym $mod+Ctrl+q exec i3lock -c 444444 #-i 'path' to use image background
 # Binding for faster browsing
 bindsym $mod+f exec firefox
 
@@ -179,7 +188,8 @@ bar {
         position bottom
         colors {
           background #333333
-          #separator #ff0000
+          separator #ffffff
           statusline #ffffff
         }
+        separator_symbol "|"
 }
